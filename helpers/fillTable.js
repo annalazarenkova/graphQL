@@ -93,6 +93,7 @@ let months = [
     result.appendChild(tableWrapper);
   
     if (data.length > 0){
+      document.getElementById('go-timeline').style.display = "block"
       if (activePage == "div") {
         showChartDIV(data, activePage);
       } else {
