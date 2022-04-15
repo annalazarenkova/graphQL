@@ -213,7 +213,7 @@ async function getAuditPoints(startNumber) {
       let ratio = auditReceived / auditDone;
       document.getElementById("audit-ratio").innerHTML = `${ratio.toFixed(
         2
-      )} %`;
+      )}`;
       document.getElementById("auditDoneRect").style.width = 200 * ratio;
     });
 }
