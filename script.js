@@ -227,7 +227,7 @@ async function piscineTransactions(startNumber, String) {
       dataList.push(item);
       total += item.amount;
     });
-    if (dataList.length == 50) {
+    if (dataList.length == 50  && data.data.transaction.length > 0) {
       //  console.log("Uuesti", dataList.length);
       number += 50;
       return piscineTransactions(number, String);
