@@ -104,7 +104,7 @@ async function start(grandTotalXP) {
 
   document.getElementById(
     "ratioPie"
-  ).innerHTML = `Ratio "${activePage}" section points vs all my earned points`;
+  ).innerHTML = `Ratio "${activePage}" section points vs all earned points till now`;
   document.getElementById("xpRatio").innerHTML = current + " / " + grandTotalXP;
 
   // SVG PIE
