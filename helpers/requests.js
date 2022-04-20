@@ -1,5 +1,6 @@
 export const goPiscine = "/johvi/piscine-go/";
 export const jsPiscine = "/johvi/div-01/piscine-js/";
+export const jsPiscine2 = "/johvi/div-01/piscine-js-2"
 export const divGeneral = "/johvi/div-01/";
 
 export const transactionRequest = `
@@ -8,7 +9,7 @@ query ($offset: Int, $path: String, $userId: Int) {
     where: {
       userId: { _eq: $userId }
       type: { _eq: "xp" }
-      path: { _iregex: $path }
+      path: { _iregex: $path }      
     }
     offset: $offset
   ) {
@@ -22,6 +23,34 @@ query ($offset: Int, $path: String, $userId: Int) {
   }
 }
 `;
+
+
+
+export const jsRequest = `
+query ($offset: Int, $path1: String, $path2: String, $userId: Int) {
+  transaction(
+    where: {
+      userId: { _eq: $userId }
+      type: { _eq: "xp" }
+      _or: [
+        {path: { _iregex: $path1 }},
+        {path: { _iregex: $path2 }},
+      ]
+    }
+    offset: $offset
+  ) {
+    object {
+      type
+      name
+    }
+    path
+    amount
+    createdAt
+  }
+}
+`;
+
+
 
 export const OnlyDivPart = `
   query ($userId: Int){ progress 
