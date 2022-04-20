@@ -2,11 +2,13 @@ import { fillInTable } from "./helpers/fillTable.js";
 import {
   goPiscine,
   jsPiscine,
+  jsPiscine2,
   transactionRequest,
   OnlyDivPart,
   pointsRequestByObjectID,
   auditPointsRequest,
   userRequest,
+  jsRequest
 } from "./helpers/requests.js";
 
 let grandTotalXP = 0;
@@ -79,7 +81,7 @@ async function start(grandTotalXP) {
       fillInTable(fullDiv, activePage);
       break;
     case "js":
-      dataList = await piscineTransactions(0, jsPiscine);
+      dataList = await JSTransactions(0, jsPiscine, jsPiscine2);
       fillInTable(dataList, activePage);
       break;
   }
@@ -211,14 +213,12 @@ async function getAuditPoints(startNumber) {
 
       //adjust the width
       let ratio = auditReceived / auditDone;
-      document.getElementById("audit-ratio").innerHTML = `${ratio.toFixed(
-        2
-      )}`;
+      document.getElementById("audit-ratio").innerHTML = `${ratio.toFixed(2)}`;
       document.getElementById("auditDoneRect").style.width = 200 * ratio;
     });
 }
 
-//GET PISCINE TRANSACTION POINTS
+//GET GO PISCINE TRANSACTION POINTS
 async function piscineTransactions(startNumber, String) {
   let number = startNumber;
   let variables = { offset: startNumber, path: String, userId: myUserId };
@@ -228,7 +228,6 @@ async function piscineTransactions(startNumber, String) {
       total += item.amount;
     });
     if (dataList.length % 50 == 0 && data.data.transaction.length > 0) {
-      // console.log("Uuesti", dataList.length);
       number += 50;
       return piscineTransactions(number, String);
     } else {
@@ -236,6 +235,26 @@ async function piscineTransactions(startNumber, String) {
     }
   });
 }
+
+//GET JS PISCINE TRANSACTION POINTS
+async function JSTransactions(startNumber, string1, string2) {
+  let number = startNumber;
+  let variables = { offset: startNumber, path1: string1, path2: string2, userId: myUserId };
+  return queryFetch(jsRequest, variables).then((data) => {
+    console.log(data)
+    data.data.transaction.forEach((item) => {
+      dataList.push(item);
+      total += item.amount;
+    });
+    if (dataList.length % 50 == 0 && data.data.transaction.length > 0) {
+      number += 50;
+      return JSTransactions(number, string1, string2);
+    } else {
+      return dataList;
+    }
+  });
+}
+
 
 // show/hide transaction detailed table
 let detailsButton = document.getElementById("seeDetails");
