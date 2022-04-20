@@ -71,6 +71,7 @@ h3 {
 }
 .piscine-choice:hover {
   color: var(--lillaDark);
+  background-color: var(--lillaLight);
 }
 /*  Section2  */
 .general-info {
